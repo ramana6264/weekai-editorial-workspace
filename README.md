@@ -54,7 +54,32 @@ Manual smoke test:
 
 ## Deployment
 
-Because this is a static site, it can be deployed to GitHub Pages, Netlify, Vercel, or any static host. Upload the contents of `WeekAi/`; no environment variables or server runtime are required. For local sharing, use `python -m http.server 8000`.
+The full app needs a Python web service because the browser calls the `/api/research` and `/api/newsletter` endpoints. Deploy it on Render, Railway, or another Python host using:
+
+- **Build command:** leave empty
+- **Start command:** `python server.py`
+- **Environment variable:** `OPENAI_API_KEY` (optional; fallback mode works without it)
+
+The server reads the platform-provided `PORT` and binds to the configured host. GitHub Pages can host the frontend files, but it cannot run the research/newsletter API, so it is not suitable for the complete app.
+
+### Vercel deployment
+
+Vercel uses the `api/research.py` and `api/newsletter.py` serverless functions included in this repository. From the project folder:
+
+```powershell
+npm install -g vercel
+cd C:\Users\boddu\NxtWave\WeekAi
+vercel login
+vercel
+```
+
+Accept the detected project settings. In the Vercel project dashboard, add `OPENAI_API_KEY` as an environment variable if AI output is wanted. Without it, the extraction and deterministic fallback still work. Deploy production after testing:
+
+```powershell
+vercel --prod
+```
+
+After deployment, verify the API route directly by opening `https://YOUR-APP.vercel.app/api/research` in a browser. A `405 Method Not Allowed` response means the route exists and only accepts POST; a Vercel “page not found” response means the `api/` files were not included in the deployed commit or the Vercel project root is incorrect.
 
 ## Disclosure
 
