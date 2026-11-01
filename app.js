@@ -47,7 +47,9 @@ async function generateBrief() {
   button.firstChild.textContent = "Extracting sources… ";
   try {
     const response = await fetch("/api/research", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sources: active.map(source => source.value) }) });
-    const data = await response.json();
+    const raw = await response.text();
+    let data;
+    try { data = JSON.parse(raw); } catch { throw new Error(`The deployment returned HTTP ${response.status} instead of JSON. Check that the latest api files were pushed to Vercel.`); }
     if (!response.ok) throw new Error(data.error || "Research request failed.");
     latestBrief = data;
     renderBrief(data);
@@ -74,7 +76,9 @@ async function generateNewsletter() {
   button.disabled = true; button.firstChild.textContent = "Writing… ";
   try {
     const response = await fetch("/api/newsletter", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ brief: latestBrief }) });
-    const data = await response.json();
+    const raw = await response.text();
+    let data;
+    try { data = JSON.parse(raw); } catch { throw new Error(`The deployment returned HTTP ${response.status} instead of JSON. Check that the latest api files were pushed to Vercel.`); }
     if (!response.ok) throw new Error(data.error || "Newsletter request failed.");
     newsletterOutput.classList.remove("hidden");
     newsletterOutput.innerHTML = `<div class="brief-header"><h3>${escapeHtml(data.headline)}</h3><span class="fact-label">${data.word_count} WORDS</span></div><p class="newsletter-copy">${escapeHtml(data.body).replace(/\n\n/g, "</p><p>")}</p><div class="source-links"><strong>Sources:</strong> ${latestBrief.sources.map(source => `<a class="source-link" href="${safeUrl(source.input)}" target="_blank" rel="noreferrer">${escapeHtml(source.title || sourceName(source.input))}</a>`).join(" · ")}</div><button class="secondary-button" id="useNewsletterBtn">Open in newsletter editor <span>→</span></button>`;
