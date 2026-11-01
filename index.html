@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeekAI Editorial Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#"><span class="brand-mark">W</span><span>week<span class="brand-accent">ai</span></span></a>
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a class="nav-link active" href="#dashboard">Dashboard</a>
+        <a class="nav-link" href="#research">Research</a>
+        <a class="nav-link" href="#brief">Brief</a>
+        <a class="nav-link" href="#editor">Newsletter editor</a>
+      </nav>
+      <div class="topbar-meta"><span class="status-dot"></span> Editorial workspace <span class="topbar-divider"></span> Local mode</div>
+    </header>
+
+    <main>
+      <section class="dashboard panel" id="dashboard">
+        <div class="dashboard-copy">
+          <span class="section-kicker">EDITORIAL DASHBOARD</span>
+          <h2>This week’s desk</h2>
+          <p>Move from source collection to an editor-approved draft in one focused workspace.</p>
+        </div>
+        <div class="dashboard-actions">
+          <a class="dashboard-card active-card" href="#research"><span class="dashboard-icon">01</span><strong>Research a story</strong><small>Collect signals and find an angle →</small></a>
+          <a class="dashboard-card" href="#editor"><span class="dashboard-icon">02</span><strong>Polish a newsletter</strong><small>Review clarity before you send →</small></a>
+          <div class="dashboard-stat"><strong id="dashboardStatus">Ready</strong><small>WORKSPACE STATUS</small></div>
+        </div>
+      </section>
+      <section class="hero">
+        <div class="eyebrow">ISSUE 04 / EDITORIAL DESK</div>
+        <h1>From signal<br><em>to story.</em></h1>
+        <p class="hero-copy">A calm place to investigate what matters in AI, then make it clear enough to be useful.</p>
+        <div class="workflow">
+          <div class="workflow-step active"><span>01</span> Research</div>
+          <div class="workflow-line"></div>
+          <div class="workflow-step"><span>02</span> Shape the brief</div>
+          <div class="workflow-line"></div>
+          <div class="workflow-step"><span>03</span> Polish the draft</div>
+        </div>
+      </section>
+
+      <section class="workspace-grid" id="research">
+        <div class="research-panel panel">
+          <div class="panel-heading">
+            <div><span class="section-kicker">RESEARCH ASSISTANT</span><h2>Find the story</h2></div>
+            <span class="step-badge">01</span>
+          </div>
+          <p class="panel-intro">Bring three signals. We’ll separate what’s known from what’s worth exploring.</p>
+          <div class="source-list" id="sourceList"></div>
+          <button class="text-button" id="addSourceBtn">＋ Add another source</button>
+          <div class="research-actions">
+            <button class="primary-button" id="generateBtn">Generate research brief <span>→</span></button>
+            <span class="helper-text">Works with URLs, pasted text, or tweets</span>
+          </div>
+          <div id="brief" class="brief-output hidden"></div>
+          <div id="newsletterOutput" class="newsletter-output hidden"></div>
+        </div>
+
+        <aside class="insight-rail">
+          <div class="rail-card">
+            <span class="section-kicker">EDITORIAL LENS</span>
+            <blockquote>“The question isn’t what happened. It’s what changes for the person reading this.”</blockquote>
+            <div class="quote-attribution">— The WeekAI desk</div>
+          </div>
+          <div class="rail-card muted-rail">
+            <span class="section-kicker">WORKFLOW NOTE</span>
+            <p>Research is intentionally source-first. The assistant never presents an inference as a fact.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="writing-section panel" id="editor">
+        <div class="panel-heading">
+          <div><span class="section-kicker">NEWSLETTER EDITOR / WRITING ASSISTANT</span><h2>Make the draft earn its words</h2></div>
+          <span class="step-badge">02</span>
+        </div>
+        <p class="panel-intro">Keep your voice and meaning. Review each note, then choose which changes belong in the final newsletter.</p>
+        <div class="writing-layout">
+          <div class="editor-column">
+            <div class="editor-toolbar"><span>WORKING DRAFT</span><button class="sample-button" id="sampleBtn">Load sample draft</button></div>
+            <textarea id="draftInput" aria-label="Draft editor" placeholder="Paste a draft here, or load the sample editorial..."></textarea>
+            <div class="editor-footer"><span id="draftState">Original draft is preserved</span><button class="secondary-button" id="analyzeBtn">Analyze draft <span>→</span></button></div>
+            <div id="comparison" class="comparison hidden"></div>
+          </div>
+          <div class="feedback-column">
+            <div class="metrics" id="metrics">
+              <div><strong>—</strong><span>WORDS</span></div><div><strong>—</strong><span>READING TIME</span></div><div><strong>—</strong><span>AVG SENTENCE</span></div><div><strong>—</strong><span>GRADE LEVEL</span></div>
+            </div>
+            <p class="metric-note">Metrics are signals, not a verdict on good writing.</p>
+            <div id="feedbackList" class="feedback-list">
+              <div class="empty-feedback"><span>✦</span><p>Your editorial notes will appear here.<br>We look for clarity, not blandness.</p></div>
+            </div>
+          </div>
+        </div>
+        <div id="revisionBar" class="revision-bar hidden"></div>
+      </section>
+    </main>
+    <footer><span>WEEKAI / A SMALL TOOL FOR BETTER AI WRITING</span><span>Deterministic local prototype · No content leaves your browser</span></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
